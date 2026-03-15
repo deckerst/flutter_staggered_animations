@@ -8,11 +8,11 @@ class AnimationConfigurator extends StatelessWidget {
   final Widget Function(Animation<double>) animatedChildBuilder;
 
   const AnimationConfigurator({
-    Key? key,
+    super.key,
     this.duration,
     this.delay,
     required this.animatedChildBuilder,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

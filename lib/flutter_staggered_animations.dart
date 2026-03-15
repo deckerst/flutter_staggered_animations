@@ -1,4 +1,4 @@
-library flutter_staggered_animations;
+library;
 
 export 'src/animation_configuration.dart';
 export 'src/animation_limiter.dart';

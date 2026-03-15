@@ -13,11 +13,11 @@ class AnimationExecutor extends StatefulWidget {
   final Builder builder;
 
   const AnimationExecutor({
-    Key? key,
+    super.key,
     required this.duration,
     this.delay = Duration.zero,
     required this.builder,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimationExecutor> createState() => _AnimationExecutorState();

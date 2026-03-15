@@ -8,10 +8,10 @@ class AutoRefresh extends StatefulWidget {
   final Widget child;
 
   const AutoRefresh({
-    Key? key,
+    super.key,
     required this.duration,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State<AutoRefresh> createState() => _AutoRefreshState();

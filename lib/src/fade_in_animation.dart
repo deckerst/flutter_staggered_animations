@@ -19,12 +19,12 @@ class FadeInAnimation extends StatelessWidget {
   ///
   /// The [child] argument must not be null.
   const FadeInAnimation({
-    Key? key,
+    super.key,
     this.duration,
     this.delay,
     this.curve = Curves.ease,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

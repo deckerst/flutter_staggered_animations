@@ -1,5 +1,7 @@
 import 'dart:math';
+
 import 'package:flutter/widgets.dart';
+
 import 'animation_configurator.dart';
 
 /// An enum representing a flip axis.
@@ -34,13 +36,13 @@ class FlipAnimation extends StatelessWidget {
   ///
   /// The [child] argument must not be null.
   const FlipAnimation({
-    Key? key,
+    super.key,
     this.duration,
     this.delay,
     this.curve = Curves.ease,
     this.flipAxis = FlipAxis.x,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,6 @@ class FlipAnimation extends StatelessWidget {
         case FlipAxis.y:
           return Matrix4.rotationY(radians);
         case FlipAxis.x:
-        default:
           return Matrix4.rotationX(radians);
       }
     }
