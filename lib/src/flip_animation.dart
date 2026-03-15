@@ -14,7 +14,7 @@ enum FlipAxis {
 }
 
 /// An animation that flips its child either vertically or horizontally.
-class FlipAnimation extends StatelessWidget {
+class FlipAnimation extends StatefulWidget {
   /// The duration of the child animation.
   final Duration? duration;
 
@@ -35,47 +35,51 @@ class FlipAnimation extends StatelessWidget {
   /// Default value for [flipAxis] is [FlipAxis.x].
   ///
   /// The [child] argument must not be null.
-  const FlipAnimation({
-    super.key,
-    this.duration,
-    this.delay,
-    this.curve = Curves.ease,
-    this.flipAxis = FlipAxis.x,
-    required this.child,
-  });
+  const FlipAnimation({super.key, this.duration, this.delay, this.curve = Curves.ease, this.flipAxis = FlipAxis.x, required this.child});
+
+  @override
+  State<FlipAnimation> createState() => _FlipAnimationState();
+}
+
+class _FlipAnimationState extends State<FlipAnimation> {
+  CurvedAnimation? _curvedAnimation;
+
+  @override
+  void dispose() {
+    _setCurvedAnimation(null);
+    super.dispose();
+  }
+
+  void _setCurvedAnimation(CurvedAnimation? animation) {
+    _curvedAnimation?.dispose();
+    _curvedAnimation = animation;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AnimationConfigurator(
-      duration: duration,
-      delay: delay,
-      animatedChildBuilder: _flipAnimation,
-    );
+    return AnimationConfigurator(duration: widget.duration, delay: widget.delay, animatedChildBuilder: _flipAnimation);
   }
 
   Widget _flipAnimation(Animation<double> animation) {
-    final _flipAnimation = Tween<double>(begin: 0, end: 1).animate(
+    _setCurvedAnimation(
       CurvedAnimation(
         parent: animation,
-        curve: Interval(0.0, 1.0, curve: curve),
+        curve: Interval(0.0, 1.0, curve: widget.curve),
       ),
     );
+    final _flipAnimation = Tween<double>(begin: 0, end: 1).animate(_curvedAnimation!);
 
     Matrix4 _computeTransformationMatrix() {
       var radians = (1 - _flipAnimation.value) * pi / 2;
 
-      switch (flipAxis) {
-        case FlipAxis.y:
+      switch (widget.flipAxis) {
+        case .y:
           return Matrix4.rotationY(radians);
-        case FlipAxis.x:
+        case .x:
           return Matrix4.rotationX(radians);
       }
     }
 
-    return Transform(
-      transform: _computeTransformationMatrix(),
-      alignment: Alignment.center,
-      child: child,
-    );
+    return Transform(transform: _computeTransformationMatrix(), alignment: Alignment.center, child: widget.child);
   }
 }
