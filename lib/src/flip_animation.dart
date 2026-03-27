@@ -73,9 +73,9 @@ class _FlipAnimationState extends State<FlipAnimation> {
       var radians = (1 - _flipAnimation.value) * pi / 2;
 
       switch (widget.flipAxis) {
-        case .y:
+        case FlipAxis.y:
           return Matrix4.rotationY(radians);
-        case .x:
+        case FlipAxis.x:
           return Matrix4.rotationX(radians);
       }
     }
